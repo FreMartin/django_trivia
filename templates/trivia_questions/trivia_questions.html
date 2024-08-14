@@ -1,0 +1,64 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block tittle %} Trivia {%  endblock %}
+
+{% block body %} 
+    {% if question %}
+        <div class="col-12">
+            <div class="card m-5 p-5 question text-center">
+                <div class="card-body">
+                    <h2>{{question.text}}</h2>
+                </div>                
+            </div>
+        </div>
+        {% for answer in answers %}
+            <div class="col-6">
+                <div class="card answer m-5 p-3 text-center">
+                    <div class="card-body">
+                        <h2>{{answer.text}}</h2>
+                    </div>
+                </div>
+            </div>
+        {% endfor %} 
+
+        <!--Control del Paginator-->
+            <div class="row mb-4">
+           
+                {% if page_obj.has_previous %}
+                <div class="col-4 text-start">
+                    <a href="?page={{ page_obj.previous_page_number }}"><h1>&laquo;</h1></a>
+                </div>
+                {% endif %}
+
+                <div class="col-4 text-center">
+                    <h3>{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}.</h3>
+                </div>
+
+                {% if page_obj.has_next %}
+                <div class="col-4 text-end">
+                    <a href="?page={{ page_obj.next_page_number }}"><h1>&raquo;</h1></a>
+                </div>
+                {% endif %}
+        
+        </div>
+
+        <!--Timer-->
+
+        <div class="container text-start">
+            <div class="col-2 text-center">
+                <div class="card">
+                    <div class="card-footer text-lg text-white bg-primary">
+                        <h3>Time left:</h3> <h1 id="timer">01:00</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% else %}
+        <p>No questions available</p>
+{% endif %}
+{% endblock %}
+
+{% block timer %}
+    <script src="{% static 'js/timer.js' %}"></script>
+{% endblock %}
