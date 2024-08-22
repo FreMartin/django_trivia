@@ -10,7 +10,7 @@ def questions(request):
 
     context = {}
     page_number = request.GET.get('page')   
-    questions_list = Question.objects.all() 
+    questions_list = Question.objects.all()[0:5] 
     paginator = Paginator(questions_list, 1) 
     page_obj = paginator.get_page(page_number)
 
